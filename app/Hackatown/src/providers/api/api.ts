@@ -1,5 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { catchError } from 'rxjs/operators';
+
+import { Category } from '../../common/category';
 
 /*
   Generated class for the ApiProvider provider.
@@ -10,12 +15,24 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ApiProvider {
 
+  API_URL: string = "http://localhost:8081/"
+
   constructor(public http: HttpClient) {
     console.log('Hello ApiProvider Provider');
   }
 
-  getCategories() {
-    return "LEL";
+  private handleError<T> (operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      return of(result as T);
+    };
+  }
+
+  getCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(this.API_URL + "categories")
+      .pipe(
+        catchError(this.handleError('getCategories', []))
+      );
   }
 
 }
