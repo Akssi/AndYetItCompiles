@@ -13,6 +13,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   templateUrl: 'app.html'
 })
 export class MyApp {
+
+
   @ViewChild(Nav) nav: Nav;
 
   // make HelloIonicPage the root (or first) page
@@ -31,7 +33,9 @@ export class MyApp {
     this.pages = [
       { title: 'Main Page', component: MainPage }
     ];
+
   }
+
 
   initializeApp() {
     this.platform.ready().then(() => {
@@ -40,7 +44,11 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+
+    
   }
+
+
 
   openPage(page) {
     // close the menu when clicking a link from the menu

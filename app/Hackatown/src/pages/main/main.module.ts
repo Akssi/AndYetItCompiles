@@ -10,4 +10,7 @@ import { MainPage } from './main';
     IonicPageModule.forChild(MainPage),
   ],
 })
-export class MainPageModule {}
+export class MainPageModule {
+
+	
+}

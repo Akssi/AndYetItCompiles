@@ -35,6 +35,18 @@
     </ion-buttons>
   </ion-card>
 
+  <ion-card *ngFor="let decision of decisions">
+    <ion-card-header>
+       {{decision.title}}
+    </ion-card-header>
+    <ion-card-content>
+       {{decision.content}}
+    </ion-card-content>
+   
+   </ion-card>
+
+
+
   <div  *ngIf="expanded==true"> STUFF </div>
   
 </ion-content>

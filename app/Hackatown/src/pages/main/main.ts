@@ -4,7 +4,9 @@ import { Observable } from 'rxjs/Observable';
 
 import { ApiProvider } from '../../providers/api/api';
 
-import { Category } from '../../common/category.ts';
+import { Category } from '../../common/category';
+
+import { Decision } from '../../app/decision';
 
 /**
  * Generated class for the MainPage page.
@@ -21,12 +23,14 @@ import { Category } from '../../common/category.ts';
 export class MainPage implements OnInit {
 
   categories: Category[];
+  decisions: Decision[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider) {	
   }
 
   ngOnInit() {
     this.getCategories();
+    this.initializePage();
   }
 
   getCategories(): void {
@@ -39,4 +43,32 @@ export class MainPage implements OnInit {
     console.log('ionViewDidLoad MainPage');
   }
 
+	initializePage() {
+		console.log("initialze main page");
+		this.populateDecisions();
+		
+	}
+
+	// POPULATE DECISIONS
+  populateDecisions() {
+    let categories1: string[] = new Array("transport", "economie"); 
+    let categories2: string[] = new Array("transport", "societe"); 
+    let decision1: Decision = {
+      id :"dsa12",
+      title : "ceci est une premiere decision",
+      content : "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla",
+      categories : categories1 
+    };
+    let decision2: Decision = {
+      id :"322",
+      title : "ceci est une deuxieme decision",
+      content : "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla",
+      categories : categories2
+    };
+    this.decisions = new Array(decision1, decision2);
+    console.log("STUFF");
+    console.log(this.decisions[0].id);
+   // this.decisions.push(decision1);
+   // this.decisions.push(decision2);
+  }
 }
