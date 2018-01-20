@@ -5,10 +5,14 @@ app.get('/', function (req, res) {
   res.send("WOW");
 })
 
-app.get('/list_categories', function(req, res) {
-  var response = {
-    "categories" : ["allo", "allo2"]
-  };
+app.get('/categories', function(req, res) {
+  var response = [
+    { "name": "Construction" },
+    { "name": "Loisir" },
+    { "name": "Art" },
+    { "name": "Infrastructure" },
+    { "name": "Politique" },
+  ];
   res.send(JSON.stringify(response));
 })
 
