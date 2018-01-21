@@ -46,14 +46,15 @@ export class ApiProvider {
       );
   }
 
-  getDecisionsByCategories(categories: Category[]){
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
+  getDecisionsByCategories(categories: Category[]): Observable<Decision[]> {
+    let newCats: number[] = [];
+    categories.forEach(function(e) {
+      newCats.push((e.id === undefined) ? 0 : e.id);
+    });
 
-    console.log('api.getDecisionsByCategories was called');
-    return this.http.get<Decision[]>(this.API_URL + "decisions")
+    return this.http.post<Decision[]>(this.API_URL + "decisions", categories)
       .pipe(
-        catchError(this.handleError('getDecisions', []))
+        catchError(this.handleError('getDecisionsByCategories', []))
       );
   }
 

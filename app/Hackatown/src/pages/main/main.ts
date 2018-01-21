@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
@@ -7,7 +7,6 @@ import { ApiProvider } from '../../providers/api/api';
 import { Category } from '../../common/category';
 
 import { Decision } from '../../common/decision';
-import { IconMap } from '../../common/iconMap';
 
 import { Events } from 'ionic-angular';
 
@@ -26,13 +25,13 @@ import { Events } from 'ionic-angular';
 export class MainPage implements OnInit {
 
   categories: Category[];
-  decisions: Decision[];  
-  iconMap;
+  iconMap: Map<String, String>;
+  decisions: Observable<Decision[]>;
 
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, public events: Events) {	
+  constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, public events: Events, private _ngZone: NgZone) {	
     events.subscribe('parametersClosed', (categories) => {
     // user and time are the same arguments passed in `events.publish(user, time)`
+    categories = categories.filter(c => c.selected === undefined || c.selected);
 
     console.log('The event parametersClosed was caugh in main.ts, with: ', categories);
     this.getDecisionsByCategories(categories);
@@ -43,16 +42,15 @@ export class MainPage implements OnInit {
   ngOnInit() {
     this.getCategories();
     this.getDecisions();
-    this.iconMap = {
-      "Finance": "md-stats",
-      "Affaires et Industriel": "md-construct",
-      "Loi et gouvernement": "md-paper"
-    }
+    this.iconMap = new Map<String, String>();
+    this.iconMap.set("Finance", "md-stats");
+    this.iconMap.set("Affaires et Industriel", "md-construct");
+    this.iconMap.set("Loi et gouvernement", "md-paper");
   }
 
   obtainIcon(category:String): String
   {
-    return this.iconMap[category];
+    return this.iconMap.get(category);
   }
   getCategories(): void {
     this.apiProvider.getCategories()
@@ -60,20 +58,20 @@ export class MainPage implements OnInit {
   }
 
   getDecisions(): void {
-    this.apiProvider.getDecisions()
-      .subscribe(h =>  this.decisions = h);
+    this.decisions = this.apiProvider.getDecisions();
   }
 
-  getDecisionsByCategories(categories: Category)
+  getDecisionsByCategories(categories: Category[])
   {
-    this.apiProvider.getDecisionsByCategories(categories)
-      .subscribe(h =>  this.decisions = h);
+    console.log('getDecisionByCat called');
+    this._ngZone.run( () => {
+      this.decisions = this.apiProvider.getDecisionsByCategories(categories);
+    });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MainPage');
   }
-
 
   handleCardExpansion(event, decision) {
     if (decision.selected === undefined || decision.selected === false) {

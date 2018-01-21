@@ -71,10 +71,10 @@ export class MyApp {
       this.events.publish('parametersClosed', this.categories);
   }
 
-  handleCategoryToggle(category: Category) {
-    if (category.selected === undefined || category.selected === false) {
+  handleCategoryToggle(category) {
+    if (category.selected === false) {
       category.selected = true;
-    } else if (category.selected === true) {
+    } else if (category.selected === undefined || category.selected === true) {
       category.selected = false;
     }
   }
