@@ -7,6 +7,7 @@ import { ApiProvider } from '../../providers/api/api';
 import { Category } from '../../common/category';
 
 import { Decision } from '../../common/decision';
+import { IconMap } from '../../common/iconMap';
 
 import { Events } from 'ionic-angular';
 
@@ -25,7 +26,9 @@ import { Events } from 'ionic-angular';
 export class MainPage implements OnInit {
 
   categories: Category[];
-  decisions: Decision[];
+  decisions: Decision[];  
+  iconMap;
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, public events: Events) {	
     events.subscribe('parametersClosed', (categories) => {
@@ -34,13 +37,23 @@ export class MainPage implements OnInit {
     console.log('The event parametersClosed was caugh in main.ts, with: ', categories);
     this.getDecisionsByCategories(categories);
   });
+
   }
 
   ngOnInit() {
     this.getCategories();
     this.getDecisions();
+    this.iconMap = {
+      "Finance": "md-stats",
+      "Affaires et Industriel": "md-construct",
+      "Loi et gouvernement": "md-paper"
+    }
   }
 
+  obtainIcon(category:String): String
+  {
+    return this.iconMap[category];
+  }
   getCategories(): void {
     this.apiProvider.getCategories()
       .subscribe(h =>  this.categories = h);

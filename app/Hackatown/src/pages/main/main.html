@@ -14,7 +14,7 @@
     </button>
     
 
-    <ion-title class="menu-header"><img src="assets/imgs/dm-accueil-icon-3.png" height="25px" width="25px" style="margin-right: 10px"><font face="aliensandcows">NeoCitoyens</font>  </ion-title>
+    <ion-title class="menu-header main-title"><img src="assets/imgs/dm-accueil-icon-3.png" height="40px" width="40px" style="margin-right: 15px"><font face="aliensandcows">Neo Citoyens</font>  </ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -27,7 +27,7 @@
 
 
 <ion-card *ngFor="let decision of decisions" [class.card-expended]="decision.selected" [class.card-collapsed]="decision.selected === undefined || decision.selected === false">
-  <ion-icon class="icon-decision" name="heart"></ion-icon>
+  <ion-icon class="icon-decision" [name]="obtainIcon(decision.categories[0])"></ion-icon>
   <ion-card-header>
      {{decision.title}}
   </ion-card-header>

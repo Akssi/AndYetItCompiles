@@ -4,9 +4,13 @@ page-main {
 
 @font-face {
     font-family: 'aliensandcows';
-    src: url('../../fonts/aliens and cows_trial.ttf');
+    src: url('../assets/fonts/aliens and cows_trial.ttf');
     font-weight: normal;
     font-style: normal;
+}
+
+.main-title .toolbar-title-md{
+	font-size: 4rem;
 }
 
 .menu-header .toolbar-background {
