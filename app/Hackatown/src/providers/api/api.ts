@@ -41,7 +41,7 @@ export class ApiProvider {
   }
 
   getArrondissements(): Observable<Arrondissement[]> {
-    return this.http.get<Arrondissement[]>(this.API_URL + "arrondissement")
+    return this.http.get<Arrondissement[]>(this.API_URL + "arrondissements")
       .pipe(
         catchError(this.handleError('getArrondissements', []))
       );
