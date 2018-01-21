@@ -5,8 +5,13 @@ import { Platform, MenuController, Nav } from 'ionic-angular';
 import { MainPage } from '../pages/main/main';
 import { PopoverPage } from '../pages/popover/popover';
 
+import { ApiProvider } from '../providers/api/api';
+
+import { Category } from '../common/category';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Events } from 'ionic-angular';
 
 
 @Component({
@@ -20,12 +25,15 @@ export class MyApp {
   // make HelloIonicPage the root (or first) page
   rootPage = MainPage;
   pages: Array<{title: string, component: any}>;
+  categories: Category[];
 
   constructor(
     public platform: Platform,
     public menu: MenuController,
     public statusBar: StatusBar,
-    public splashScreen: SplashScreen
+    public splashScreen: SplashScreen,
+    private apiProvider: ApiProvider,
+    public events: Events
   ) {
     this.initializeApp();
 
@@ -36,6 +44,16 @@ export class MyApp {
 
   }
 
+  ngOnInit() {
+    this.getCategories();
+  }
+
+  getCategories(): void {
+    this.apiProvider.getCategories()
+      .subscribe(h =>  this.categories = h);
+  }
+
+  
 
   initializeApp() {
     this.platform.ready().then(() => {
@@ -48,7 +66,18 @@ export class MyApp {
     
   }
 
+  handleMenuClose()  {
+      console.log("app.component.ts.handleMenuClose was called");
+      this.events.publish('parametersClosed', this.categories);
+  }
 
+  handleCategoryToggle(category: Category) {
+    if (category.selected === undefined || category.selected === false) {
+      category.selected = true;
+    } else if (category.selected === true) {
+      category.selected = false;
+    }
+  }
 
   openPage(page) {
     // close the menu when clicking a link from the menu

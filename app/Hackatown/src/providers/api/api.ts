@@ -4,6 +4,9 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError } from 'rxjs/operators';
 
+
+import { Headers, RequestOptions } from '@angular/http';
+
 import { Category } from '../../common/category';
 import { Decision } from '../../common/decision';
 
@@ -37,6 +40,17 @@ export class ApiProvider {
   }
 
   getDecisions(): Observable<Decision[]> {
+    return this.http.get<Decision[]>(this.API_URL + "decisions")
+      .pipe(
+        catchError(this.handleError('getDecisions', []))
+      );
+  }
+
+  getDecisionsByCategories(categories: Category[]){
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    console.log('api.getDecisionsByCategories was called');
     return this.http.get<Decision[]>(this.API_URL + "decisions")
       .pipe(
         catchError(this.handleError('getDecisions', []))

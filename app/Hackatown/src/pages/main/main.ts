@@ -8,6 +8,8 @@ import { Category } from '../../common/category';
 
 import { Decision } from '../../common/decision';
 
+import { Events } from 'ionic-angular';
+
 /**
  * Generated class for the MainPage page.
  *
@@ -25,7 +27,13 @@ export class MainPage implements OnInit {
   categories: Category[];
   decisions: Decision[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider) {	
+  constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, public events: Events) {	
+    events.subscribe('parametersClosed', (categories) => {
+    // user and time are the same arguments passed in `events.publish(user, time)`
+
+    console.log('The event parametersClosed was caugh in main.ts, with: ', categories);
+    this.getDecisionsByCategories(categories);
+  });
   }
 
   ngOnInit() {
@@ -43,9 +51,16 @@ export class MainPage implements OnInit {
       .subscribe(h =>  this.decisions = h);
   }
 
+  getDecisionsByCategories(categories: Category)
+  {
+    this.apiProvider.getDecisionsByCategories(categories)
+      .subscribe(h =>  this.decisions = h);
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad MainPage');
   }
+
 
   handleCardExpansion(event, decision) {
     if (decision.selected === undefined || decision.selected === false) {
