@@ -6,6 +6,7 @@ import { MyApp } from './app.component';
 
 import { MainPage } from '../pages/main/main';
 import { PopoverPage } from '../pages/popover/popover';
+import { ReadMorePage } from '../pages/read-more/read-more';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -15,7 +16,8 @@ import { ApiProvider } from '../providers/api/api';
   declarations: [
     MyApp,
     MainPage,
-    PopoverPage
+    PopoverPage,
+    ReadMorePage
   ],
   imports: [
     BrowserModule,
@@ -26,7 +28,8 @@ import { ApiProvider } from '../providers/api/api';
   entryComponents: [
     MyApp,
     MainPage,
-    PopoverPage
+    PopoverPage,
+    ReadMorePage
   ],
   providers: [
     StatusBar,

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { ApiProvider } from '../../providers/api/api';
 
 import { Category } from '../../common/category';
+import { Arrondissement } from '../../common/arrondissement';
 
 import { Decision } from '../../common/decision';
 
@@ -29,12 +30,13 @@ export class MainPage implements OnInit {
   decisions: Observable<Decision[]>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiProvider: ApiProvider, public events: Events, private _ngZone: NgZone) {	
-    events.subscribe('parametersClosed', (categories) => {
+    events.subscribe('parametersClosed', (array) => {
     // user and time are the same arguments passed in `events.publish(user, time)`
-    categories = categories.filter(c => c.selected === undefined || c.selected);
+    let categories = array[0].filter(c => c.selected === undefined || c.selected);
+    let arrondissements = array[1].filter(c => c.selected === undefined || c.selected);
 
     console.log('The event parametersClosed was caugh in main.ts, with: ', categories);
-    this.getDecisionsByCategories(categories);
+    this.getDecisionsByCategories(categories, arrondissements);
   });
 
   }
@@ -46,11 +48,17 @@ export class MainPage implements OnInit {
     this.iconMap.set("Finance", "md-stats");
     this.iconMap.set("Affaires et Industriel", "md-construct");
     this.iconMap.set("Loi et gouvernement", "md-paper");
+    this.iconMap.set("Voyage", "md-plane");
   }
 
   obtainIcon(category:String): String
   {
-    return this.iconMap.get(category);
+    let icon = this.iconMap.get(category);
+    if(icon === undefined)
+    {
+      icon = "md-alert";
+    }
+    return icon;
   }
 
   getCategories(): void {
@@ -58,7 +66,7 @@ export class MainPage implements OnInit {
     this.apiProvider.getCategories()
       .subscribe(function(h) {
         this.categories = h; 
-        this.decisions = outerP.getDecisionsByCategories(this.categories);
+        this.decisions = outerP.getDecisionsByCategories(this.categories, []);
       });
   }
 
@@ -66,11 +74,11 @@ export class MainPage implements OnInit {
     this.decisions = this.apiProvider.getDecisions();
   }
 
-  getDecisionsByCategories(categories: Category[])
+  getDecisionsByCategories(categories: Category[], arrondissements: Arrondissement[])
   {
     console.log('getDecisionByCat called');
     this._ngZone.run( () => {
-      this.decisions = this.apiProvider.getDecisionsByCategories(categories);
+      this.decisions = this.apiProvider.getDecisionsByCategories(categories, arrondissements);
     });
   }
 
@@ -84,5 +92,9 @@ export class MainPage implements OnInit {
     } else if (decision.selected === true) {
       decision.selected = false;
     }
+  }
+
+  handleReadMoreClicked(decision) {    
+      this.events.publish('readMoreClicked', decision);
   }
 }

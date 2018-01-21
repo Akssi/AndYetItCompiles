@@ -10,14 +10,10 @@
     	<ion-navbar>
 	  		<ion-title>Arrondissements</ion-title>
   		</ion-navbar>
-      <ion-item>
-        <ion-label>Outremont</ion-label>
-        <ion-checkbox color="dark" checked="true"></ion-checkbox>
-      </ion-item>
-      <ion-item>
-        <ion-label>Cote des neiges</ion-label>
-        <ion-checkbox color="dark" checked="true"></ion-checkbox>
-      </ion-item>
+  		<ion-item *ngFor="let arr of arrondissements">
+        	<ion-label>{{ arr.name }}</ion-label>
+	      	<ion-checkbox (ionChange)="handleArrondissementToggle(arr)" color="dark" checked="true"></ion-checkbox>
+      	</ion-item>
 
     </ion-list>
     <ion-list>

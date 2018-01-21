@@ -9,6 +9,7 @@ import { Headers, RequestOptions } from '@angular/http';
 
 import { Category } from '../../common/category';
 import { Decision } from '../../common/decision';
+import { Arrondissement } from '../../common/arrondissement';
 
 /*
   Generated class for the ApiProvider provider.
@@ -39,6 +40,13 @@ export class ApiProvider {
       );
   }
 
+  getArrondissements(): Observable<Arrondissement[]> {
+    return this.http.get<Arrondissement[]>(this.API_URL + "arrondissement")
+      .pipe(
+        catchError(this.handleError('getArrondissements', []))
+      );
+  }
+
   getDecisions(): Observable<Decision[]> {
     return this.http.get<Decision[]>(this.API_URL + "decisions")
       .pipe(
@@ -46,13 +54,17 @@ export class ApiProvider {
       );
   }
 
-  getDecisionsByCategories(categories: Category[]): Observable<Decision[]> {
+  getDecisionsByCategories(categories: Category[], arrondissements: Arrondissement[]): Observable<Decision[]> {
     let newCats: String[] = [];
+    let newArrs: String[] = [];
     categories.forEach(function(e) {
       newCats.push(e.name);
     });
+    arrondissements.forEach(function(e) {
+      newArrs.push(e.name);
+    });
 
-    return this.http.post<Decision[]>(this.API_URL + "decisions", newCats)
+    return this.http.post<Decision[]>(this.API_URL + "decisions", [newCats, newArrs])
       .pipe(
         catchError(this.handleError('getDecisionsByCategories', []))
       );

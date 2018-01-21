@@ -27,14 +27,32 @@
 
 
 <ion-card *ngFor="let decision of decisions|async" [class.card-expended]="decision.selected" [class.card-collapsed]="decision.selected === undefined || decision.selected === false">
-  <ion-icon class="icon-decision" [name]="obtainIcon(decision.categories[0])"></ion-icon>
-  <ion-card-header>
-     {{decision.title}}
-  </ion-card-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-2>
+        <ion-icon class="icon-decision" [name]="obtainIcon(decision.categories[0])"></ion-icon>
+      </ion-col>
+      <ion-col col-10>
+        <ion-card-header>
+          #{{decision.id}} : {{decision.categories[0]}}
+        </ion-card-header>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+  
   <ion-card-content>
-     {{decision.content}}
+    {{decision.object}}
+    <ion-row style="justify-content: center; margin-top: 15px; margin-bottom: 25px;">
+      <button ion-button style="width: 165px; padding-right: 13px; background-color: #ef3e34; float:right;" 
+      (click)="handleReadMoreClicked(decision)" icon-only>
+        <ion-icon name='md-reorder' ></ion-icon>
+        En savoir plus ..
+      </button>
+    </ion-row>
   </ion-card-content>
-  <div *ngIf="decision.content.length > 120 && (decision.selected === undefined || decision.selected === false)" class="gradient" (click)="handleCardExpansion($event, decision)">
+
+  <div *ngIf="(decision.selected === undefined || decision.selected === false)" class="gradient" (click)="handleCardExpansion($event, decision)">
     <ion-icon  class="icon-arrow-card" name="arrow-dropdown"></ion-icon>
   </div>
   <div *ngIf="decision.selected === true" class="expended-gradient" (click)="handleCardExpansion($event, decision)">

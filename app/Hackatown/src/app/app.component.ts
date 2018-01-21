@@ -4,9 +4,12 @@ import { Platform, MenuController, Nav } from 'ionic-angular';
 
 import { MainPage } from '../pages/main/main';
 
+import { ReadMorePage } from '../pages/read-more/read-more';
+
 import { ApiProvider } from '../providers/api/api';
 
 import { Category } from '../common/category';
+import { Arrondissement } from '../common/arrondissement';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -25,6 +28,7 @@ export class MyApp {
   rootPage = MainPage;
   pages: Array<{title: string, component: any}>;
   categories: Category[];
+  arrondissements: Arrondissement[];
   iconMap: Map<String, String>;
 
   constructor(
@@ -41,11 +45,16 @@ export class MyApp {
     this.pages = [
       { title: 'Main Page', component: MainPage }
     ];
-
+    events.subscribe('readMoreClicked', (decision) => {
+      // user and time are the same arguments passed in `events.publish(user, time)`
+      console.log("readMore was clicked, we have to display another page");
+      this.nav.push(ReadMorePage, {EZ: decision});
+    });
   }
 
   ngOnInit() {
     this.getCategories();
+    this.getArrondissements();
 
     this.iconMap = new Map<String, String>();
     this.iconMap.set("Finance", "md-stats");
@@ -56,11 +65,17 @@ export class MyApp {
     this.iconMap.set("Politique", "md-school");
     this.iconMap.set("Construction", "md-home");    
     this.iconMap.set("Loisir", "md-football");
+    this.iconMap.set("Voyage", "md-plane");
   }
 
   getCategories(): void {
     this.apiProvider.getCategories()
       .subscribe(h =>  this.categories = h);
+  }
+
+  getArrondissements(): void {
+    this.apiProvider.getArrondissements()
+      .subscribe(h =>  this.arrondissements = h);
   }
 
   obtainIcon(category:String): String
@@ -81,7 +96,7 @@ export class MyApp {
 
   handleMenuClose()  {
       console.log("app.component.ts.handleMenuClose was called");
-      this.events.publish('parametersClosed', this.categories);
+      this.events.publish('parametersClosed', [this.categories, this.arrondissements]);
   }
 
   handleCategoryToggle(category) {
@@ -89,6 +104,14 @@ export class MyApp {
       category.selected = true;
     } else if (category.selected === undefined || category.selected === true) {
       category.selected = false;
+    }
+  }
+
+  handleArrondissementToggle(arrondissement) {
+    if (arrondissement.selected === false) {
+      arrondissement.selected = true;
+    } else if (arrondissement.selected === undefined || arrondissement.selected === true) {
+      arrondissement.selected = false;
     }
   }
 
