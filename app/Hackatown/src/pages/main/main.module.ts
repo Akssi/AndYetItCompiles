@@ -12,5 +12,5 @@ import { MainPage } from './main';
 })
 export class MainPageModule {
 
-	
+
 }

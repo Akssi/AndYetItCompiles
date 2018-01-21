@@ -3,4 +3,5 @@ export class Decision {
   title: string;
   content: string;
   categories: string[];
+  
 }
