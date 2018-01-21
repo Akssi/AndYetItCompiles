@@ -33,7 +33,7 @@ line = file.readline()
 
 currentFileType = None
 
-subjects = ["CONTEXTE", "DESCRIPTION", "JUSTIFICATION"]
+subjects = ["Object, CONTEXTE", "DESCRIPTION", "JUSTIFICATION"]
 
 while line : 
 
@@ -60,6 +60,7 @@ while line :
             jsonFile[currentFileNb] = currentFile
             currentFileNb = fileNb
             currentFile = {"SD":dict(), "SA":dict(), "RA":dict(), "R":dict()}
+            currentFile["arrondissment"] = sys.argv[2] 
 
     # Add the recommandation.
     elif "Objet" in line and (currentFileType == "R" or currentFileType == "RA"):#("Il est recommand" in line or "IL EST RECOMMAND" in line) and (currentFileType == "R" or currentFileType == "RA") :
@@ -69,6 +70,10 @@ while line :
         while paragraph == '\n':
             paragraph = readParagraph(file)
         currentFile[currentFileType]["RECOMMANDATION"] = paragraph
+    elif "Objet" in line and (currentFileType == "SD"):
+        file.readline()
+        paragraph = readParagraph(file)
+        currentFile[currentFileType]["Object"] = paragraph
 
     # For each subjects
     for i in range(len(subjects)):
