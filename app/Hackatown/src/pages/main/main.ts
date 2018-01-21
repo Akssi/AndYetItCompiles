@@ -41,7 +41,7 @@ export class MainPage implements OnInit {
 
   ngOnInit() {
     this.getCategories();
-    this.getDecisions();
+    // this.getDecisions();
     this.iconMap = new Map<String, String>();
     this.iconMap.set("Finance", "md-stats");
     this.iconMap.set("Affaires et Industriel", "md-construct");
@@ -52,10 +52,14 @@ export class MainPage implements OnInit {
   {
     return this.iconMap.get(category);
   }
-  
+
   getCategories(): void {
+    let outerP = this;
     this.apiProvider.getCategories()
-      .subscribe(h =>  this.categories = h);
+      .subscribe(function(h) {
+        this.categories = h; 
+        this.decisions = outerP.getDecisionsByCategories(this.categories);
+      });
   }
 
   getDecisions(): void {

@@ -47,12 +47,12 @@ export class ApiProvider {
   }
 
   getDecisionsByCategories(categories: Category[]): Observable<Decision[]> {
-    let newCats: number[] = [];
+    let newCats: String[] = [];
     categories.forEach(function(e) {
-      newCats.push((e.id === undefined) ? 0 : e.id);
+      newCats.push(e.name);
     });
 
-    return this.http.post<Decision[]>(this.API_URL + "decisions", categories)
+    return this.http.post<Decision[]>(this.API_URL + "decisions", newCats)
       .pipe(
         catchError(this.handleError('getDecisionsByCategories', []))
       );
