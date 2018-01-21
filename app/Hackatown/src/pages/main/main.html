@@ -4,13 +4,17 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
+
+
 <ion-header >
     
-  <ion-navbar>
+  <ion-navbar class="menu-header">
     <button ion-button menuToggle icon-only>
       <ion-icon name='menu'></ion-icon>
     </button>
-    <ion-title>MainPage</ion-title>
+    
+
+    <ion-title class="menu-header"><img src="assets/imgs/dm-accueil-icon-3.png" height="25px" width="25px" style="margin-right: 10px"><font face="aliensandcows">NeoCitoyens</font>  </ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -20,9 +24,6 @@
 
 <ion-content padding>
 
-<ul>
-  <li *ngFor="let cat of categories"> {{ cat.name }} </li>
-</ul>
 
 
 <ion-card *ngFor="let decision of decisions" [class.card-expended]="decision.selected" [class.card-collapsed]="decision.selected === undefined || decision.selected === false">

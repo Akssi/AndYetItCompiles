@@ -1,16 +1,36 @@
 
-<ion-menu [content]="content">
+<ion-menu (ionClose)="handleMenuClose()" [content]="content">
   <ion-header>
-    <ion-toolbar>
-      <ion-title>Categories</ion-title>
+    <ion-toolbar  class="menu-header">
+      <ion-title class="menu-header">Paramètres</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content>
     <ion-list>
+    	<ion-navbar>
+	  		<ion-title>Arrondissements</ion-title>
+  		</ion-navbar>
       <ion-item>
-        <ion-label>Daenerys Targaryen</ion-label>
+        <ion-label>Outremont</ion-label>
         <ion-checkbox color="dark" checked="true"></ion-checkbox>
       </ion-item>
+      <ion-item>
+        <ion-label>Cote des neiges</ion-label>
+        <ion-checkbox color="dark" checked="true"></ion-checkbox>
+      </ion-item>
+
+    </ion-list>
+    <ion-list>
+    	<ion-navbar>
+	  		<ion-title>Catégories</ion-title>
+  		</ion-navbar>
+      
+      <ion-item *ngFor="let cat of categories">
+      	<ion-toggle (ionChange)="handleCategoryToggle(cat)" color="rouge" checked="true"></ion-toggle>
+        <ion-label>{{ cat.name }}</ion-label>
+    	<ion-icon name="leaf" item-start></ion-icon>
+      </ion-item>
+      
     </ion-list>
   </ion-content>
 </ion-menu>
