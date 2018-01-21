@@ -52,6 +52,7 @@ export class MainPage implements OnInit {
   {
     return this.iconMap.get(category);
   }
+  
   getCategories(): void {
     this.apiProvider.getCategories()
       .subscribe(h =>  this.categories = h);

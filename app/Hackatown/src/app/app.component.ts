@@ -3,7 +3,6 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, MenuController, Nav } from 'ionic-angular';
 
 import { MainPage } from '../pages/main/main';
-import { PopoverPage } from '../pages/popover/popover';
 
 import { ApiProvider } from '../providers/api/api';
 
@@ -26,6 +25,7 @@ export class MyApp {
   rootPage = MainPage;
   pages: Array<{title: string, component: any}>;
   categories: Category[];
+  iconMap: Map<String, String>;
 
   constructor(
     public platform: Platform,
@@ -46,6 +46,16 @@ export class MyApp {
 
   ngOnInit() {
     this.getCategories();
+
+    this.iconMap = new Map<String, String>();
+    this.iconMap.set("Finance", "md-stats");
+    this.iconMap.set("Affaires et Industriel", "md-construct");
+    this.iconMap.set("Loi et gouvernement", "md-paper");
+    this.iconMap.set("Art", "md-color-palette");    
+    this.iconMap.set("Infrastructure", "md-home");
+    this.iconMap.set("Politique", "md-school");
+    this.iconMap.set("Construction", "md-home");    
+    this.iconMap.set("Loisir", "md-football");
   }
 
   getCategories(): void {
@@ -53,7 +63,10 @@ export class MyApp {
       .subscribe(h =>  this.categories = h);
   }
 
-  
+  obtainIcon(category:String): String
+  {
+    return this.iconMap.get(category);
+  }
 
   initializeApp() {
     this.platform.ready().then(() => {
