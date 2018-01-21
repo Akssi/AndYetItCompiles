@@ -60,12 +60,17 @@ export class MyApp {
     this.iconMap.set("Finance", "md-stats");
     this.iconMap.set("Affaires et Industriel", "md-construct");
     this.iconMap.set("Loi et gouvernement", "md-paper");
-    this.iconMap.set("Art", "md-color-palette");    
-    this.iconMap.set("Infrastructure", "md-home");
-    this.iconMap.set("Politique", "md-school");
-    this.iconMap.set("Construction", "md-home");    
-    this.iconMap.set("Loisir", "md-football");
+    this.iconMap.set("Arts et divertissements", "md-color-palette");    
+    this.iconMap.set("Immobilier", "md-home");
+    this.iconMap.set("Références", "md-reorder");
+    this.iconMap.set("Maison et jardin", "md-home");    
+    this.iconMap.set("Loisirs", "md-football");
     this.iconMap.set("Voyage", "md-plane");
+    this.iconMap.set("Santé", "md-medkit");
+    this.iconMap.set("Sports", "md-basketball");
+    this.iconMap.set("Animaux", "md-paw");
+    this.iconMap.set("Science", "md-flask");
+    this.iconMap.set("Informatique et électronique", "md-at");
   }
 
   getCategories(): void {
@@ -80,7 +85,12 @@ export class MyApp {
 
   obtainIcon(category:String): String
   {
-    return this.iconMap.get(category);
+    let icon = this.iconMap.get(category);
+    if(icon === undefined)
+    {
+      icon = "md-alert";
+    }
+    return icon;
   }
 
   initializeApp() {

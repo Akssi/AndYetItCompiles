@@ -13,21 +13,39 @@
 </ion-header>
 
 
-<ion-content padding style="line-height: 1.5; text-align: justify;">
-	<h1> Objet </h1>
-	{{decision.object}}
+<ion-content class="more-info-countainer" padding style="line-height: 1.5; text-align: justify;">
+	<div *ngIf="decision.object !== undefined">
+		<h1> Objet </h1>
+		{{decision.object}}
+	</div>
 
-	<h1> Description </h1>
-	{{decision.description}}
+	<div *ngIf="decision.decision !== undefined">
+		<h1> Decision </h1>
+		{{decision.decision}}
+	</div>
 
-	<h1> Arrondissement </h1>
-	{{decision.arrondissement}}
+	<div *ngIf="decision.description !== undefined">
+		<h1> Description </h1>
+		{{decision.description}}
+	</div>
 
-	<h1> Justification </h1>
-	{{decision.justification}}
+	<div *ngIf="decision.arrondissement !== undefined">
+		<h1> Arrondissement </h1>
+		<span class="label-arrondissement">
+			{{decision.arrondissement.charAt(0).toUpperCase() + decision.arrondissement.substring(1, decision.arrondissement.length)}}
+		</span>
+	</div>
 
-	<h1> Categories </h1>
-	<ul>
-		<li *ngFor="let c of decision.categories">{{c}}</li>
-	</ul>
+	<div *ngIf="decision.justification !== undefined">
+		<h1> Justification </h1>
+		{{decision.justification}}
+	</div>
+	
+	<div *ngIf="decision.categories !== undefined">
+		<h1> Categories </h1>
+
+		<ul>
+			<li *ngFor="let c of decision.categories">{{c}}</li>
+		</ul>
+	</div>
 </ion-content>

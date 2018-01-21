@@ -48,7 +48,17 @@ export class MainPage implements OnInit {
     this.iconMap.set("Finance", "md-stats");
     this.iconMap.set("Affaires et Industriel", "md-construct");
     this.iconMap.set("Loi et gouvernement", "md-paper");
+    this.iconMap.set("Arts et divertissements", "md-color-palette");    
+    this.iconMap.set("Immobilier", "md-home");
+    this.iconMap.set("Références", "md-reorder");
+    this.iconMap.set("Maison et jardin", "md-home");    
+    this.iconMap.set("Loisirs", "md-football");
     this.iconMap.set("Voyage", "md-plane");
+    this.iconMap.set("Santé", "md-medkit");
+    this.iconMap.set("Sports", "md-basketball");
+    this.iconMap.set("Animaux", "md-paw");
+    this.iconMap.set("Science", "md-flask");
+    this.iconMap.set("Informatique et électronique", "md-at");
   }
 
   obtainIcon(category:String): String
