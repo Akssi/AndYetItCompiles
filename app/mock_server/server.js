@@ -21,7 +21,21 @@ app.get('/decisions', function(req, res) {
   let decision1 = {
     id :"id1",
     title : "ceci est une premiere decision",
-    content : "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla",
+    content : "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla" + 
+      "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla" + 
+      "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla" + 
+      "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla" + 
+      "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla"+ 
+      "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla"+ 
+      "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla"+ 
+      "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla"+ 
+      "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla"+ 
+      "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla"+ 
+      "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla"+ 
+      "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla"+ 
+      "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla"+ 
+      "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla"+ 
+      "bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla",
     categories : categories1 
   };
   let categories2 = ["transport", "societe"]; 
