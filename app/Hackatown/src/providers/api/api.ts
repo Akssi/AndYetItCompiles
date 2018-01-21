@@ -5,6 +5,7 @@ import { of } from 'rxjs/observable/of';
 import { catchError } from 'rxjs/operators';
 
 import { Category } from '../../common/category';
+import { Decision } from '../../common/decision';
 
 /*
   Generated class for the ApiProvider provider.
@@ -15,7 +16,7 @@ import { Category } from '../../common/category';
 @Injectable()
 export class ApiProvider {
 
-  API_URL: string = "http://localhost:8081/"
+  API_URL: string = "http://35.203.69.56/"
 
   constructor(public http: HttpClient) {
     console.log('Hello ApiProvider Provider');
@@ -32,6 +33,13 @@ export class ApiProvider {
     return this.http.get<Category[]>(this.API_URL + "categories")
       .pipe(
         catchError(this.handleError('getCategories', []))
+      );
+  }
+
+  getDecisions(): Observable<Decision[]> {
+    return this.http.get<Decision[]>(this.API_URL + "decisions")
+      .pipe(
+        catchError(this.handleError('getDecisions', []))
       );
   }
 
